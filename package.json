@@ -1,0 +1,30 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "weather",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chef-danny-d/weather.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chef-danny-d/weather/issues"
+  },
+  "homepage": "https://github.com/chef-danny-d/weather#readme",
+  "devDependencies": {
+    "bootstrap": "^4.3.1",
+    "parcel": "^1.12.3",
+    "parcel-bundler": "^1.12.3",
+    "sass": "^1.22.3"
+  },
+  "dependencies": {
+    "skycons": "^1.0.0"
+  }
+}
