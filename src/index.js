@@ -1,5 +1,4 @@
 import './main.sass'
-//import 'skycons'
 
 window.addEventListener('load', () => {
     let long;
@@ -8,6 +7,7 @@ window.addEventListener('load', () => {
     let tempDeg = document.querySelector('.temp-degree-number')
     let locTime = document.querySelector('.location-timezone')
     let iconID = document.querySelector('.location-icon')
+    let tempType = document.querySelector('.temp-degree-type')
     let apiKey = '2e48de904312892143be954d60027dd6'
 
     if (navigator.geolocation){
@@ -16,20 +16,28 @@ window.addEventListener('load', () => {
             lat = position.coords.latitude
 
             const proxy = "https://cors-anywhere.herokuapp.com/"
-            const apiUrl = `${proxy}api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${apiKey}`
+            const apiUrl = `${proxy}api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${apiKey}&units=imperial`
 
             fetch(apiUrl)
                 .then(resp => {
                     return resp.json()
                 })
                 .then(data => {
+                    let conv = (data) => {
+                        let x = Math.round(data.main.temp)
+                        tempDeg.textContent = (x -32) * 5 / 9
+
+                        return x
+                    }
+
                     //console.log(data.main.temp)
-                    tempDeg.textContent = data.main.temp
+                    tempDeg.textContent = Math.round(data.main.temp)
+                    tempType.addEventListener("click", conv)
                     //let celsiusTemp = (Math.round(temperature) − 32) * 5/9
                     //console.log(celsiusTemp)
                     tempDesc.textContent = data.weather[0].description
                     //locTime.textContent = data.timezone.replace(/_/g, " ")
-                    locTime.textContent = data.timezone
+                    locTime.textContent = ((data.timezone/60)/60) + ':00'
 
                     //setIcons(icon, iconID)
                 })

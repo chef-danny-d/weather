@@ -1,0 +1,33 @@
+.tile
+  border-radius: 2em
+  background-color: lightgoldenrodyellow
+  padding: 0.75em 2.25em
+  &__selected
+    width: 35%
+    background-color: rebeccapurple
+    color: $white
+    &--temp
+      font-size: 6em
+      margin-bottom: 0
+    &--desc
+      margin-top: -1em
+    &--label
+      margin-bottom: 0
+      margin-top: 2.5em
+    &--avg
+      margin-bottom: 0
+      opacity: 0.4
+      color: $gray-300
+      font-weight: bold
+      font-size: 1.5em
+
+  &--temp
+    &:after
+      content: ''
+      position: absolute
+      display: block
+      border-radius: 100%
+      color: white
+  &__next
+    width: fit-content
+    padding: 0.75em 1.75em

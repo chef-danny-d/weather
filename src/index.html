@@ -3,26 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather</title>
-    <script src="skycons.js"></script>
     <script src="./index.js"></script>
     <link rel="stylesheet" href="import/weather-icons.min.css">
     <link rel="stylesheet" href="import/weather-icons-wind.min.css">
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col">
-            <div class="location">
-                <h1 class="location-timezone"></h1>
-                <i class="wi wi-day-sunny"></i>
+            <div class="top d-flex">
+                <i class="top--icon top--icon__location fa fa-location-arrow fa-2x"></i>
+                <form class="search">
+                    <input type="text" class="search--input form-control text-center" value="Huston, TX">
+                </form>
+                <i class="top--icon top--icon__search fa fa-search fa-2x"></i>
             </div>
-            <div class="temp">
-                <div class="temp-degree">
-                    <h2 class="temp-degree-number"></h2>
-                    <span class="temp-degree-type">F</span>
+
+            <div class="row pill mt-3 mb-3">
+                <nav class="nav nav-pills flex-column flex-sm-row pill--nav">
+                    <a class="flex-sm-fill text-sm-center nav-link active pill--nav--link" href="#">Today</a>
+                    <a class="flex-sm-fill text-sm-center nav-link pill--nav--link" href="#">Tomorrow</a>
+                    <a class="flex-sm-fill text-sm-center nav-link pill--nav--link pill--nav--link__disabled" href="#">Next Week</a>
+                </nav>
+            </div>
+
+            <div class="tile tile__selected text-center align-self-center m-auto">
+                <h1 class="tile--temp tile__selected--temp">25</h1>
+                <p class="tile--desc tile__selected--desc">Clouds & Sun</p>
+                <p class="tile--label tile__selected--label">Humidity</p>
+                <p class="tile--avg tile__selected--avg">35</p>
+            </div>
+
+            <h3 class="next">Next 15 Days</h3>
+            <div class="col next--wrapper d-flex justify-content-around flex-row">
+                <div class="tile tile__next">
+                    <p class="tile--day">Monday</p>
+                    <i class="tile--icon fa fa-sun"></i>
+                    <p class="tile--temp">40</p>
+                    <p class="tile--temp__low">56</p>
+                    <p class="tile--temp__high">69</p>
                 </div>
-                <div class="temp-desc">Cold</div>
+                <div class="tile tile__next">
+                    <p class="tile--day">Monday</p>
+                    <i class="tile--icon fa fa-sun"></i>
+                    <p class="tile--temp">40</p>
+                    <p class="tile--temp__low">56</p>
+                    <p class="tile--temp__high">69</p>
+                </div>
+                <div class="tile tile__next">
+                    <p class="tile--day">Monday</p>
+                    <i class="tile--icon fa fa-sun"></i>
+                    <p class="tile--temp">40</p>
+                    <p class="tile--temp__low">56</p>
+                    <p class="tile--temp__high">69</p>
+                </div>
+                <div class="tile tile__next">
+                    <p class="tile--day">Monday</p>
+                    <i class="tile--icon fa fa-sun"></i>
+                    <p class="tile--temp">40</p>
+                    <p class="tile--temp__low">56</p>
+                    <p class="tile--temp__high">69</p>
+                </div>
+                <div class="tile tile__next">
+                    <p class="tile--day">Monday</p>
+                    <i class="tile--icon fa fa-sun"></i>
+                    <p class="tile--temp">40</p>
+                    <p class="tile--temp__low">56</p>
+                    <p class="tile--temp__high">69</p>
+                </div>
+                <div class="tile tile__next">
+                    <p class="tile--day">Monday</p>
+                    <i class="tile--icon fa fa-sun"></i>
+                    <p class="tile--temp">40</p>
+                    <p class="tile--temp__low">56</p>
+                    <p class="tile--temp__high">69</p>
+                </div>
             </div>
+<!--            <div class="location">-->
+<!--                <h1 class="location-timezone"></h1>-->
+<!--                <i class="wi wi-day-sunny"></i>-->
+<!--            </div>-->
+<!--            <div class="temp">-->
+<!--                <div class="temp-degree">-->
+<!--                    <h2 class="temp-degree-number"></h2>-->
+<!--                    <span class="temp-degree-type">F</span>-->
+<!--                </div>-->
+<!--                <div class="temp-desc">Cold</div>-->
+<!--            </div>-->
         </div>
     </div>
 </div>
