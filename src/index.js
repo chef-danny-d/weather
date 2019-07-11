@@ -8,7 +8,7 @@ window.addEventListener('load', () => {
     let tempDeg = document.querySelector('.temp-degree-number')
     let locTime = document.querySelector('.location-timezone')
     let iconID = document.querySelector('.location-icon')
-    let apiKey = 'b686f0a7b5350c439e34fc3773ef9180'
+    let apiKey = '2e48de904312892143be954d60027dd6'
 
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(position => {
@@ -16,22 +16,22 @@ window.addEventListener('load', () => {
             lat = position.coords.latitude
 
             const proxy = "https://cors-anywhere.herokuapp.com/"
-            const apiUrl = `${proxy}https://api.darksky.net/forecast/${apiKey}/${lat},${long}`
+            const apiUrl = `${proxy}api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${apiKey}`
 
             fetch(apiUrl)
                 .then(resp => {
                     return resp.json()
                 })
                 .then(data => {
-                    const {temperature, summary, icon} = data.currently;
-
-                    tempDeg.textContent = Math.round(temperature)
+                    //console.log(data.main.temp)
+                    tempDeg.textContent = data.main.temp
                     //let celsiusTemp = (Math.round(temperature) − 32) * 5/9
                     //console.log(celsiusTemp)
-                    tempDesc.textContent = summary
-                    locTime.textContent = data.timezone.replace(/_/g, " ")
+                    tempDesc.textContent = data.weather[0].description
+                    //locTime.textContent = data.timezone.replace(/_/g, " ")
+                    locTime.textContent = data.timezone
 
-                    setIcons(icon, iconID)
+                    //setIcons(icon, iconID)
                 })
         })
     }
@@ -39,10 +39,10 @@ window.addEventListener('load', () => {
         //append a search input
     }
 
-    let setIcons = (icon, iconID) => {
-        const skycons = new Skycons({color: "white"})
-        const currentIcon = icon.replace(/-/g, "_").toUpperCase()
-        skycons.play()
-        return skycons.set(iconID, Skycons[currentIcon])
-    }
+    // let setIcons = (icon, iconID) => {
+    //     const skycons = new Skycons({color: "white"})
+    //     const currentIcon = icon.replace(/-/g, "_").toUpperCase()
+    //     skycons.play()
+    //     return skycons.set(iconID, Skycons[currentIcon])
+    // }
 });
