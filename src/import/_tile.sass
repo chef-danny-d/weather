@@ -1,11 +1,12 @@
 .tile
   border-radius: 2em
-  background-color: lightgoldenrodyellow
+  background-color: red
   padding: 0.75em 2.25em
   &__selected
     width: 35%
     background-color: rebeccapurple
     color: $white
+    position: relative
     &--temp
       font-size: 6em
       margin-bottom: 0
@@ -14,12 +15,19 @@
     &--label
       margin-bottom: 0
       margin-top: 2.5em
-    &--avg
+    &--hum
       margin-bottom: 0
       opacity: 0.4
       color: $gray-300
       font-weight: bold
       font-size: 1.5em
+    &--icon
+      position: absolute
+      right: 0
+      top: 0
+      margin: 0.75em
+      opacity: 0.4
+      cursor: pointer
 
   &--temp
     &:after
@@ -29,5 +37,8 @@
       border-radius: 100%
       color: white
   &__next
-    width: fit-content
+    width: 12%
     padding: 0.75em 1.75em
+.next--wrapper
+  justify-content: space-evenly
+  padding: 0

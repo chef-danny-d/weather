@@ -1,14 +1,13 @@
 import './main.sass'
+//import './skycons.js'
 
 window.addEventListener('load', () => {
     let long;
     let lat;
     let tempDesc = document.querySelector('.temp-desc')
     let tempDeg = document.querySelector('.temp-degree-number')
-    let locTime = document.querySelector('.location-timezone')
-    let iconID = document.querySelector('.location-icon')
-    let tempType = document.querySelector('.temp-degree-type')
-    let apiKey = '2e48de904312892143be954d60027dd6'
+    let hum = document.querySelector('.hum')
+    let apiKey = 'b686f0a7b5350c439e34fc3773ef9180'
 
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(position => {
@@ -16,41 +15,105 @@ window.addEventListener('load', () => {
             lat = position.coords.latitude
 
             const proxy = "https://cors-anywhere.herokuapp.com/"
-            const apiUrl = `${proxy}api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${apiKey}&units=imperial`
+            let apiUrl = `${proxy}https://api.darksky.net/forecast/${apiKey}/${lat},${long}`
 
             fetch(apiUrl)
                 .then(resp => {
                     return resp.json()
                 })
                 .then(data => {
-                    let conv = (data) => {
-                        let x = Math.round(data.main.temp)
-                        tempDeg.textContent = (x -32) * 5 / 9
+                    const {temperature, summary, humidity, icon} = data.currently
 
-                        return x
+                    tempDeg.textContent = Math.trunc(temperature)
+
+                    hum.textContent = (humidity * 100) + '%'
+
+                    tempDesc.textContent = summary
+
+                    let setIcons = (icon, iconID) => {
+                        let skycons = new Skycons()
+                        let currentIcon = icon
+                        skycons.play()
+                        return skycons.set(iconID, currentIcon)
                     }
 
-                    //console.log(data.main.temp)
-                    tempDeg.textContent = Math.round(data.main.temp)
-                    tempType.addEventListener("click", conv)
-                    //let celsiusTemp = (Math.round(temperature) − 32) * 5/9
-                    //console.log(celsiusTemp)
-                    tempDesc.textContent = data.weather[0].description
-                    //locTime.textContent = data.timezone.replace(/_/g, " ")
-                    locTime.textContent = ((data.timezone/60)/60) + ':00'
+                    setIcons(icon, document.getElementById('icon1'))
 
-                    //setIcons(icon, iconID)
+                    //Next day loop setup
+                    let nextLoop = document.getElementById('wrapper')
+                    let y = ''
+
+                    //converts UNIX timestamp coming from the API into a date, than gets the day of the date, and than converts the day array number into a string of the day name
+                    let day = (y, q) => {
+                        let d = new Date(q * 1000)
+                        let x = d.getDay()
+                        if(x == 0){
+                            y = 'Sunday'
+                        }
+                        if(x == 1){
+                            y = 'Monday'
+                        }
+                        if(x == 2){
+                            y = 'Tuesday'
+                        }
+                        if(x == 3){
+                            y = 'Wednesday'
+                        }
+                        if(x == 4){
+                            y = 'Thursday'
+                        }
+                        if(x == 5){
+                            y = 'Friday'
+                        }
+                        if(x == 6){
+                            y = 'Saturday'
+                        }
+
+                        return y
+                    }
+
+                    //define the icon to use based on API data
+                    let iconFn = (icon, iconApi) => {
+                        //append <i class="wi wi-day-sunny"></i>
+                        //1. find out the weather
+                        //2. find out if it's day or night
+
+                        if(iconApi == 'rain'){
+                            let b = document.getElementById('icon')
+                            b.innerHTML += `<i class="wi wi-rain"></i>`
+                        }
+
+                        return icon
+                    }
+
+                    for (let z = 0; z <= 6; z++){
+                        let t = new Date((data.daily.data[z + 1].time))
+
+
+
+                        // let skycons = new Skycons({"color": "black"});
+                        // let iconAPP = data.daily.data[z].icon
+                        // iconAPP.replace(/-/g, "_").toUpperCase()
+                        // skycons.add(document.getElementById("icon2"), Skycons.iconAPP);
+                        // skycons.play();
+
+
+
+                        nextLoop.innerHTML +=
+                            `
+                            <div class="tile tile__next">
+                                <p class="tile--day">${day(y, t)}</p>
+                                <div id="icon">${iconFn()}</div>
+                                <p class="tile--temp">${Math.trunc((Math.round(data.daily.data[z].temperatureLow) + Math.round(data.daily.data[z].temperatureHigh)) / 2)}</p>
+                                <p class="tile--temp__low">${Math.round(data.daily.data[z].temperatureLow)}</p>
+                                <p class="tile--temp__high">${Math.round(data.daily.data[z].temperatureHigh)}</p>
+                            </div>
+                            `
+                    }
                 })
         })
     }
     else{
         //append a search input
     }
-
-    // let setIcons = (icon, iconID) => {
-    //     const skycons = new Skycons({color: "white"})
-    //     const currentIcon = icon.replace(/-/g, "_").toUpperCase()
-    //     skycons.play()
-    //     return skycons.set(iconID, Skycons[currentIcon])
-    // }
 });
